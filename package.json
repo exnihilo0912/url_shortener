@@ -1,0 +1,16 @@
+{
+  "name": "url_shortener",
+  "version": "1.0.0",
+  "description": "shortening url website",
+  "main": "index.html",
+  "repository": "git@github.com:exnihilo0912/url_shortener.git",
+  "author": "Exii0710",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "parcel": "^1.12.4"
+  },
+  "devDependencies": {
+    "sass": "^1.23.7"
+  }
+}
