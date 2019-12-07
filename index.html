@@ -9,79 +9,92 @@
 <body>
   <main class="main-container">
     <header class="header">
-      <img class="header__logo" src="" alt="header logo">
-      <i class="header__nav-icon-m">burger menu</i>
+      <img class="header__logo" src="images/logo.svg" alt="header logo">
+      <ion-icon class="header__nav-icon-m" name="menu"></ion-icon>
       <nav class="header__nav">
         <ul class="list list--nav">
           <li class="list__item">Features</li>
           <li class="list__item">Pricing</li>
           <li class="list__item">Resources</li>
           <li class="list__item">Login</li>
-          <li class="list__item"><button class="btn">Sign Up</button></li>
+          <li class="list__item">
+            <button class="btn btn--big">Sign Up</button>
+          </li>
         </ul>
       </nav>
     </header>
     <div class="content">
       <img  class="landing-img" src="images/illustration-working.svg" alt="">
+
       <section class="landing-intro container">
         <h1 class="title title--main">More than just shorter links</h1>
         <p class="caption">
           Build your brand’s recognition and get detailed insights
           on how your links are performing.
         </p>
-        <button class="btn">Get Started</button>
+        <button class="btn btn--fat">Get Started</button>
       </section>
-      <form action="#" method="post">
-        <input type="url" />
-        <button type="submit">Shorten It!</button>
+
+      <form class="form" action="#" method="post">
+        <div class="input-group">
+          <label class="input-group__label hidden"></label>
+          <input class="input-group__input" type="url" placeholder="Shorten a link here..." />
+          <p class="input-group__error">Please add a link</p>
+        </div>
+
+        <button class="btn btn--soft-corner" type="submit">Shorten It!</button>
       </form>
-      <section class="container">
+
+      <section class="container container--bg">
         <h2 class="title">Advanced Statistics</h2>
         <p class="caption">
           Track how your links are performing across the web with our
           advanced statistics dashboard.
         </p>
-      </section>
-      <div class="container timeline">
-        <article class="timeline-card">
-          <div class="timeline__icon">
-            <img src="images/icon-brand-recognition.svg" alt="icon recognition">
+
+        <div class="timeline">
+          <article class="timeline-card">
+            <div class="timeline__icon">
+              <img src="images/icon-brand-recognition.svg" alt="icon recognition">
+            </div>
             <h3 class="timeline__title">Brand Recognition</h3>
             <p class="timeline__caption">
               Boost your brand recognition with each click. Generic links don’t
               mean a thing. Branded links help instil confidence in your content.
             </p>
-          </div>
-        </article>
+          </article>
 
-        <article class="timeline-card">
-          <div class="timeline__icon">
-            <img src="images/icon-detailed-records.svg" alt="icon recognition">
+          <article class="timeline-card">
+            <div class="timeline__icon">
+              <img src="images/icon-detailed-records.svg" alt="icon recognition">
+            </div>
             <h3 class="timeline__title">Detailed Records</h3>
             <p class="timeline__caption">
               Gain insights into who is clicking your links. Knowing when and where
               people engage with your content helps inform better decisions.
             </p>
-          </div>
-        </article>
+          </article>
 
-        <article class="timeline-card">
-          <div class="timeline__icon">
-            <img src="images/icon-fully-customizable.svg" alt="icon recognition">
+          <article class="timeline-card">
+            <div class="timeline__icon">
+              <img src="images/icon-fully-customizable.svg" alt="icon recognition">
+            </div>
             <h3 class="timeline__title">Fully Customizable</h3>
             <p class="timeline__caption">
               Improve brand awareness and content discoverability through customizable
               links, supercharging audience engagement.
             </p>
-          </div>
-        </article>
-      </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="container container--purple">
+        <h2 class="title">Boost your links today</h2>
+        <button class="btn btn--fat">Get Started</button>
+      </section>
     </div>
-    <section class="container container--purple">
-      <h2 class="title">Boost your links today</h2>
-      <button class="btn">Get Started</button>
-    </section>
-    <footer>
+    <footer class="footer">
+      <img src="/images/logo.svg" alt="footer logo">
       <ul class="list">
         <li class="list__item list__item--title">Features</li>
         <li class="list_item"><a>Link Shortening</a></li>
@@ -118,5 +131,6 @@
     </footer>
   </main>
   <script src="src/main.js"></script>
+  <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 </body>
 </html>
