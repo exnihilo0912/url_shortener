@@ -40,8 +40,8 @@
       <div class="url-container container container--bg">
         <form class="form" action="#" method="post" novalidate>
           <div class="input-group">
-            <label class="input-group__label hidden"></label>
-            <input class="input-group__input" type="url" placeholder="Shorten a link here..." />
+            <label for="url" class="input-group__label hidden"></label>
+            <input id="url" name="url" class="input-group__input" type="url" placeholder="Shorten a link here..." />
             <p class="input-group__error">Please add a link</p>
           </div>
           <button class="btn btn--soft-corner" type="submit">Shorten It!</button>
@@ -122,22 +122,22 @@
       </ul>
       <ul class="list list--hori">
         <li class="list__item">
-          <a class="sns" href="https://www.facebook.com">
+          <a class="sns" href="https://www.facebook.com" aria-label="facebook">
             <ion-icon name="logo-facebook"></ion-icon>
           </a>
         </li>
         <li class="list__item">
-          <a class="sns" href="https://www.twitter.com">
+          <a class="sns" href="https://www.twitter.com" aria-label="twitter">
             <ion-icon name="logo-twitter"></ion-icon>
           </a>
         </li>
         <li class="list__item">
-          <a class="sns" href="https://www.pinterest.com">
+          <a class="sns" href="https://www.pinterest.com" aria-label="pinterest">
             <ion-icon name="logo-pinterest"></ion-icon>
           </a>
         </li>
         <li class="list__item">
-          <a class="sns" href="https://www.instagram.com">
+          <a class="sns" href="https://www.instagram.com" aria-label="instagram">
             <ion-icon name="logo-instagram"></ion-icon>
           </a>
         </li>
