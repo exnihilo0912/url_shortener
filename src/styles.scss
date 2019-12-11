@@ -83,6 +83,7 @@ html, body {
   box-sizing: border-box;
   background: white;
   mask: url("/images/logo.svg") no-repeat center;
+  -webkit-mask: url("/images/logo.svg") no-repeat center;
 }
 
 @media only screen and (min-width: 1440px) {
