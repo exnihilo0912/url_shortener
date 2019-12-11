@@ -8,16 +8,18 @@ const form = document.querySelector('form.form');
 const card_container = document.querySelector('.card-container');
 
 //TODO dropdown menu
+//TODO copied change state
 (function () {
     const UI = new StateMachine(card_container, 'https://rel.ink/api/links/', link_root);
     if(!form) {
         return;
     }
     const clipboard = new ClipboardJS('.btn-copy');
+
+    // copy button clicked
     clipboard.on('success', function(e) {
-        console.info('Action:', e.action);
-        console.info('Text:', e.text);
-        console.info('Trigger:', e.trigger);
+        e.trigger.classList.add('btn--used');
+        e.trigger.innerHTML = 'Copied!';
 
         e.clearSelection();
     });
@@ -25,6 +27,5 @@ const card_container = document.querySelector('.card-container');
     form.addEventListener('submit', e => {
         e.preventDefault();
         UI.dispatch('click', 'input[type="url"]');
-    })
-
+    });
 }());

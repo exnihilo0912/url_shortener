@@ -288,6 +288,12 @@ html, body {
   &--fat {
     padding: .75rem 2rem;
   }
+  &--used {
+    background-color: $secondary;
+    &:active:not(&--disabled), &:hover:not(&--disabled) {
+      background-color: hsl(257, 27%, 56%);
+    }
+  }
   &--soft-corner {
     border-radius: 6px;
   }
@@ -342,9 +348,13 @@ html, body {
     border-bottom-color: $secondary;
     border-radius: 90px;
   animation: rotate 2s linear infinite;
+  transition: all .25s ease-in-out, opacity .18s ease-in;
 
   &:not(.on) {
     visibility: hidden;
+      opacity: 0;
+    animation: none;
+    margin: 0 auto;
   }
 }
 
