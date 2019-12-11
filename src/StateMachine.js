@@ -3,9 +3,14 @@ import axios from 'axios';
 //TODO waiting/Loading UI
 //TODO feedback Copy  + copied state for button
 //TODO card append animation
+
+//Storage keys
+const storage_keys = {link: 'links'};
+
 export default class StateMachine {
     constructor(container, api_url, base_url) {
         this.url = api_url;
+        this.storage = null;
         this.base_url = base_url;
         this.container = container;
         this.current_state = 'idle';
@@ -66,7 +71,8 @@ export default class StateMachine {
             'result': {
                 display: ({title, caption}) => {
                     this.changeState('idle');
-                    this.container && this.container.insertAdjacentHTML('beforeend',StateMachine.make_card(title, caption))
+                    this.container && this.container.insertAdjacentHTML('beforeend',StateMachine.make_card(title, caption));
+                    this.container && this.addToStorage(this.updateData(this.getFromStorage(storage_keys['link'], []), {title, caption}))
                 }
             }
         }
@@ -78,7 +84,6 @@ export default class StateMachine {
     }
 
     changeState(new_state) {
-        console.log('changing state: ' + new_state);
         if(this.states[new_state]) {
             this.current_state = new_state;
         }
@@ -92,6 +97,34 @@ export default class StateMachine {
         else
             loading.classList.remove('on');
 
+    }
+
+    updateData(data, new_data) {
+        if(data instanceof Array)
+            data.push(new_data);
+        else {
+            Object.assign(data, new_data);
+        }
+        return {key: storage_keys['link'], value: data};
+    }
+
+    initStorage(storage) {
+        if(storage) {
+            this.storage = storage;
+        }
+    }
+
+    // Abstract localStorage / Session storage & value check
+    addToStorage({key, value}) {
+        if(!this.storage || !key || !value)
+            return;
+        this.storage.setItem(key, JSON.stringify(value));
+    }
+
+    getFromStorage(key, _default) {
+        if(!this.storage || !key)
+            return;
+        return JSON.parse(this.storage.getItem(key)) || _default;
     }
 
     static make_card(title, caption) {
