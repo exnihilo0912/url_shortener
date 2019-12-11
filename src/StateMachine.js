@@ -1,15 +1,29 @@
+import axios from 'axios';
+
+//TODO waiting/Loading UI
+//TODO feedback Copy  + copied state for button
+//TODO card append animation
 export default class StateMachine {
-    constructor(container) {
+    constructor(container, api_url, base_url) {
+        this.url = api_url;
+        this.base_url = base_url;
         this.container = container;
         this.current_state = 'idle';
         this.states = {
             'idle': {
                 click: (selector) => {
                     this.changeState('checking');
-                    if(document.querySelector(`${selector}:invalid`)) {
-                        this.dispatch('failure', {selector, message: 'Please add a link'});
+                    let invalid = document.querySelector(`${selector}:invalid`)
+                    if(invalid || !document.querySelector(selector).value) {
+                        this.dispatch('failure', {selector, message: invalid ? 'Not a valid url' : 'Please add a link'});
                     } else {
-                        this.dispatch('success');
+                        let input = document.querySelector(`${selector}`);
+                        let input_error = document.querySelector(`${selector} ~ .input-group__error`);
+                        if(input_error.classList.contains('invalid')) {
+                            input_error.classList.remove('invalid');
+                        }
+                        this.loading(true);
+                        this.dispatch('success', {url: input.value, selector});
                     }
                 },
             },
@@ -18,36 +32,41 @@ export default class StateMachine {
                     this.changeState('result');
                     this.dispatch('display', data)
                 },
-                failure: (payload) => {
+                failure: ({selector}) => {
                     this.changeState('error');
-                    this.dispatch('display', payload);
-
+                    this.dispatch('display', {selector, message: 'Link creation failed'});
                 }
             },
             'checking': {
-                //TODO yarn add axios
-                success: () => {
+                success: ({url, selector}) => {
                     this.changeState('fetching');
-                    //perform api call
-                    this.dispatch('success', {title: 'test', caption: 'test card'})
+                    axios.post(this.url, {url}).then( ({data}) => {
+                        this.dispatch('success', {title: data.url, caption: this.base_url + data.hashid})
+                    }).catch( err => {
+                        this.dispatch('failure', {selector})
+                    }).finally(e => {
+                        this.loading(false);
+                    });
+
                 },
-                failure: (selector) => {
+                failure: ({selector, message}) => {
                     this.changeState('error');
-                    this.dispatch('display',{selector, message: 'link creation failed'})
+                    this.dispatch('display',{selector, message})
                 }
             },
             'error': {
                 display: ({selector, message}) => {
                     this.changeState('idle');
-                    //display error message on selector
+
+                    let input_error = document.querySelector(`${selector} ~ .input-group__error`);
+                    input_error.innerHTML = message;
+                    input_error.classList.add('invalid')
                 }
             },
             'result': {
                 display: ({title, caption}) => {
                     this.changeState('idle');
-                    //add card with data
                     this.container && this.container.insertAdjacentHTML('beforeend',StateMachine.make_card(title, caption))
-
                 }
             }
         }
@@ -65,13 +84,23 @@ export default class StateMachine {
         }
     }
 
+    loading(mode) {
+        let loading = document.querySelector('.loading');
+
+        if(mode)
+            loading.classList.add('on');
+        else
+            loading.classList.remove('on');
+
+    }
+
     static make_card(title, caption) {
         return `
             <article class="card">
                 <h4 class="card__title">${title}</h4>
                 <div class="card__content">
-                  <p class="card__caption">${caption}</p>
-                  <button class="btn btn--big btn--soft-corner">Copy</button>
+                  <input id="test" class="card__caption" value="${caption}" readonly />
+                  <button class="btn btn--big btn--soft-corner btn-copy" data-clipboard-target="#test">Copy</button>
                 </div>
             </article>
         `;
