@@ -2,19 +2,21 @@ import styles from './styles.scss'
 import StateMachine from "./StateMachine";
 import ClipboardJS from 'clipboard';
 
-const link_root = 'https://rel.ink/';
-const input = document.querySelector('input[type="url"]');
+const api_url = 'https://rel.ink/api/links/';
+const url_prefix = 'https://rel.ink/';
 const form = document.querySelector('form.form');
 const card_container = document.querySelector('.card-container');
+const dropdown = document.querySelector('.dropdown');
+
 //Storage keys
 const storage = window.localStorage;
 const storage_keys = {link: 'links'};
 //TODO dropdown menu
-//TODO copied change state
 (function () {
-    const UI = new StateMachine(card_container, 'https://rel.ink/api/links/', link_root);
+    const UI = new StateMachine(card_container, api_url, url_prefix);
     UI.initStorage(storage, storage_keys);
     UI.initLinks();
+
     if(!form) {
         return;
     }
@@ -35,4 +37,15 @@ const storage_keys = {link: 'links'};
         UI.dispatch('click', 'input[type="url"]');
     });
 
+    // dropdown
+    dropdown.addEventListener('click', e => {
+       let elem = e.target;
+       let target = document.querySelector(elem.dataset.target);
+
+       if(target.classList.contains('open')) {
+           target.classList.remove('open');
+       } else {
+           target.classList.add('open');
+       }
+    });
 }());

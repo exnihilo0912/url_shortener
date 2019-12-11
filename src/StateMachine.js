@@ -11,7 +11,7 @@ export default class StateMachine {
             'idle': {
                 click: (selector) => {
                     this.changeState('checking');
-                    let invalid = document.querySelector(`${selector}:invalid`)
+                    let invalid = document.querySelector(`${selector}:invalid`);
                     if(invalid || !document.querySelector(selector).value) {
                         this.dispatch('failure', {selector, message: invalid ? 'Not a valid url' : 'Please add a link'});
                     } else {

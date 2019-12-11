@@ -36,12 +36,17 @@ html, body {
     background-color: $secondary;
       color: white;
     width: calc(100vw - 3rem);
-    padding: 1.5rem;
+    max-height: 0;
+    padding: 0;
     box-sizing: border-box;
     visibility: hidden;
       z-index: 2;
-    &.active {
+    transition: all .35s ease-in-out;
+    overflow: hidden;
+    &.open {
       visibility: visible;
+      padding: 1.5rem;
+      max-height: 50vh;
     }
 
     &-icon-m {
