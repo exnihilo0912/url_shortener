@@ -1,16 +1,9 @@
 import axios from 'axios';
 
-//TODO waiting/Loading UI
-//TODO feedback Copy  + copied state for button
-//TODO card append animation
-
-//Storage keys
-const storage_keys = {link: 'links'};
-
 export default class StateMachine {
     constructor(container, api_url, base_url) {
         this.url = api_url;
-        this.storage = null;
+        this.storage = this.storage_keys = null;
         this.base_url = base_url;
         this.container = container;
         this.current_state = 'idle';
@@ -72,7 +65,7 @@ export default class StateMachine {
                 display: ({title, caption}) => {
                     this.changeState('idle');
                     this.container && this.container.insertAdjacentHTML('beforeend',StateMachine.make_card(title, caption));
-                    this.container && this.addToStorage(this.updateData(this.getFromStorage(storage_keys['link'], []), {title, caption}))
+                    this.container && this.addToStorage(this.updateData(this.getFromStorage(this.storage_keys['link'], []), {title, caption}))
                 }
             }
         }
@@ -105,12 +98,24 @@ export default class StateMachine {
         else {
             Object.assign(data, new_data);
         }
-        return {key: storage_keys['link'], value: data};
+        return {key: this.storage_keys['link'], value: data};
     }
 
-    initStorage(storage) {
-        if(storage) {
+    initLinks() {
+        let links = this.getFromStorage(this.storage_keys['link']);
+
+        if(links) {
+            links.forEach(link => {
+                this.container &&
+                this.container.insertAdjacentHTML('beforeend',StateMachine.make_card(link.title, link.caption));
+            })
+        }
+    }
+
+    initStorage(storage, storage_keys) {
+        if(storage && storage_keys) {
             this.storage = storage;
+            this.storage_keys = storage_keys;
         }
     }
 

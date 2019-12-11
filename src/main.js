@@ -6,14 +6,15 @@ const link_root = 'https://rel.ink/';
 const input = document.querySelector('input[type="url"]');
 const form = document.querySelector('form.form');
 const card_container = document.querySelector('.card-container');
+//Storage keys
 const storage = window.localStorage;
-
+const storage_keys = {link: 'links'};
 //TODO dropdown menu
 //TODO copied change state
 (function () {
     const UI = new StateMachine(card_container, 'https://rel.ink/api/links/', link_root);
-    UI.initStorage(storage);
-
+    UI.initStorage(storage, storage_keys);
+    UI.initLinks();
     if(!form) {
         return;
     }
@@ -33,4 +34,5 @@ const storage = window.localStorage;
         e.preventDefault();
         UI.dispatch('click', 'input[type="url"]');
     });
+
 }());
